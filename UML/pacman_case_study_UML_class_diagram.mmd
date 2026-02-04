@@ -1,0 +1,213 @@
+---
+config:
+  layout: elk
+---
+classDiagram
+direction LR
+
+%% =========================================================
+%% Core Game Orchestrator
+%% =========================================================
+class Game {
+  -Maze maze
+  -Pacman pacman
+  -list~Ghost~ ghosts
+  -ScoreBoard score
+  -GameState state
+  -int level
+  -int tick
+  +load_level(n: int): void
+  +update(inputDir: Direction): void
+  +reset_positions(): void
+  -resolve_collisions(): void
+  -check_level_complete(): void
+}
+
+class GameState {
+  <<enumeration>>
+  READY
+  PLAYING
+  DYING
+  LEVEL_COMPLETE
+  GAME_OVER
+}
+
+%% Game OWNS core parts (composition = lifecycle bound)
+Game *-- Maze : composes (owns world)
+Game *-- Pacman : composes (owns player)
+Game *-- ScoreBoard : composes (owns scoring/lives)
+
+%% Game MANAGES a collection of ghosts (aggregation = managed set)
+Game "1" o-- "0..*" Ghost : aggregates (manages enemies)
+
+%% Game USES state + input types (association / dependency)
+Game --> GameState : uses (controls game flow)
+Game --> Direction : uses (player input)
+
+%% =========================================================
+%% Maze / World Model
+%% =========================================================
+class Maze {
+  -int rows
+  -int cols
+  -TileType[][] tiles
+  -dict~Cell, Item~ items
+  -Cell pacmanSpawn
+  -list~Cell~ ghostSpawns
+  +is_walkable(cell: Cell): bool
+  +warp(cell: Cell): Cell
+  +get_item(cell: Cell): Item
+  +remove_item(cell: Cell): void
+  +pellets_remaining(): int
+}
+
+class TileType {
+  <<enumeration>>
+  WALL
+  FLOOR
+  TUNNEL
+}
+
+%% Maze CONTAINS items placed in cells (aggregation)
+Maze o-- Item : aggregates (items placed on cells)
+
+%% Maze USES tile classifications + coordinate type
+Maze --> TileType : uses (grid cell types)
+Maze --> Cell : uses (coordinates & spawns)
+
+%% =========================================================
+%% Coordinate + Input Types
+%% =========================================================
+class Cell {
+  -int r
+  -int c
+  +moved(d: Direction): Cell
+  +equals(other: Cell): bool
+}
+
+class Direction {
+  <<enumeration>>
+  UP
+  DOWN
+  LEFT
+  RIGHT
+  NONE
+}
+
+%% =========================================================
+%% Actor Abstraction (shared movement + timing)
+%% =========================================================
+class Actor {
+  <<abstract>>
+  -Cell cell
+  -Direction dir
+  -Direction nextDir
+  -int moveEveryTicks
+  -int moveCounter
+  +update(game: Game): void
+  #try_turn(maze: Maze): void
+  #try_step(maze: Maze): void
+  +set_next_dir(d: Direction): void
+  +get_cell(): Cell
+}
+
+class Pacman {
+  -int powerTicks
+  -int ghostCombo
+  +update(game: Game): void
+  +is_powered(): bool
+  +power_up(ticks: int): void
+  +reset_combo(): void
+  +consume_ghost_points(): int
+}
+
+class Ghost {
+  <<abstract>>
+  -GhostState state
+  -Cell home
+  +update(game: Game): void
+  #choose_dir(game: Game): Direction
+  +frighten(ticks: int): void
+  +is_frightened(): bool
+  +reset_home(): void
+}
+
+%% Inheritance (is-a)
+Actor <|-- Pacman : inherits (player actor)
+Actor <|-- Ghost : inherits (enemy actor)
+
+%% =========================================================
+%% Ghost Specializations + State
+%% =========================================================
+class RandomGhost {
+  #choose_dir(game: Game): Direction
+}
+
+class ChaserGhost {
+  #choose_dir(game: Game): Direction
+}
+
+class GhostState {
+  <<enumeration>>
+  CHASE
+  SCATTER
+  FRIGHTENED
+}
+
+Ghost <|-- RandomGhost : inherits (random movement AI)
+Ghost <|-- ChaserGhost : inherits (chase-target AI)
+Ghost --> GhostState : uses (behavior mode)
+
+%% =========================================================
+%% Items / Collectibles (polymorphic apply effects)
+%% =========================================================
+class Item {
+  <<abstract>>
+  -int points
+  +apply(game: Game): void
+  +get_points(): int
+}
+
+class Pellet {
+  +apply(game: Game): void
+}
+
+class PowerPellet {
+  -int powerTicks
+  +apply(game: Game): void
+}
+
+class Fruit {
+  -int points
+  +apply(game: Game): void
+}
+
+%% Inheritance (is-a)
+Item <|-- Pellet : inherits (basic points)
+Item <|-- PowerPellet : inherits (points + power mode)
+Item <|-- Fruit : inherits (bonus points)
+
+%% =========================================================
+%% Score / Lives / High Score Tracking
+%% =========================================================
+class ScoreBoard {
+  -int score
+  -int lives
+  -int highScore
+  -int nextExtraLifeAt
+  +reset_new_game(): void
+  +reset_new_level(level: int): void
+  +add(points: int): void
+  +lose_life(): void
+  +maybe_extra_life(): bool
+  +save_high_score(path: str): void
+  +load_high_score(path: str): void
+  +get_score(): int
+  +get_lives(): int
+  +get_high_score(): int
+}
+
+%% Explicit usage relationships (kept for teaching clarity)
+Game --> ScoreBoard : uses (updates score/lives)
+Item --> ScoreBoard : awards via Game.score
+Pacman --> ScoreBoard : updates on ghost eats

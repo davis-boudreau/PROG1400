@@ -1,0 +1,12 @@
+stateDiagram-v2
+  [*] --> Ready
+  Ready --> Playing : start / input
+  Playing --> Power : eat SuperPellet
+  Power --> Playing : timer expires
+  Playing --> Dying : collide ghost (ghost not frightened)
+  Power --> Playing : eat frightened ghost
+  Dying --> Playing : lives remain / respawn
+  Dying --> GameOver : lives = 0
+  Playing --> LevelComplete : all pellets eaten
+  LevelComplete --> Ready : next level
+  GameOver --> Ready : restart

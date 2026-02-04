@@ -1,0 +1,197 @@
+classDiagram
+direction LR
+
+%%========================
+%% Core game coordination
+%%========================
+class Game {
+  +GameState state
+  +start()
+  +pause()
+  +resume()
+  +gameOver()
+  +updateTick()
+  +advanceLevel()
+}
+
+class GameLoop {
+  +tickRate
+  +start()
+  +stop()
+  +tick()
+}
+
+class Level {
+  +levelNumber
+  +init()
+  +isComplete() bool
+  +increaseDifficulty()
+}
+
+class LifeManager {
+  +livesRemaining
+  +loseLife()
+  +resetPositions()
+  +isGameOver() bool
+}
+
+class Score {
+  +currentScore
+  +addPoints(points)
+  +reset()
+}
+
+class CollisionDetector {
+  +checkCollisions()
+  +resolvePacmanGhost(p: PacMan, g: Ghost)
+}
+
+Game --> GameLoop : controls
+Game --> Level : manages
+Game --> LifeManager : uses
+Game --> Score : owns
+Game --> CollisionDetector : uses
+
+%%========================
+%% Maze and tiles
+%%========================
+class Maze {
+  +width
+  +height
+  +isWall(pos) bool
+  +canMove(from,to) bool
+  +getTile(pos) Tile
+}
+
+class Tile {
+  +position
+  +passable : bool
+  +hasItem() bool
+  +removeItem()
+}
+
+Maze "1" o-- "*" Tile : contains
+Level --> Maze : loads
+
+%%========================
+%% Entities
+%%========================
+class Entity {
+  <<abstract>>
+  +position
+  +direction
+  +move()
+}
+
+class PacMan {
+  +lives
+  +changeDirection(dir)
+  +consume(item: Item)
+}
+
+class Ghost {
+  <<abstract>>
+  +speed
+  +state : GhostState
+  +setState(s: GhostState)
+  +updateAI()
+}
+
+Entity <|-- PacMan
+Entity <|-- Ghost
+
+PacMan --> Maze : navigates
+Ghost --> Maze : navigates
+CollisionDetector --> PacMan : checks
+CollisionDetector --> Ghost : checks
+
+%%========================
+%% Specific ghosts
+%%========================
+class Blinky
+class Pinky
+class Inky
+class Clyde
+
+Ghost <|-- Blinky
+Ghost <|-- Pinky
+Ghost <|-- Inky
+Ghost <|-- Clyde
+
+%%========================
+%% Ghost state pattern
+%%========================
+class GhostState {
+  <<interface>>
+  +onEnter(g: Ghost)
+  +onExit(g: Ghost)
+  +nextMove(g: Ghost, m: Maze) 
+  +handleCollision(g: Ghost, p: PacMan)
+}
+
+class ChaseState
+class ScatterState
+class FrightenedState {
+  +duration
+}
+class EatenState
+
+GhostState <|.. ChaseState
+GhostState <|.. ScatterState
+GhostState <|.. FrightenedState
+GhostState <|.. EatenState
+
+Ghost --> GhostState : has
+
+GameLoop --> PacMan : updates
+GameLoop --> Ghost : updates
+GameLoop --> GhostState : timers/updates
+
+%%========================
+%% Items and scoring
+%%========================
+class Item {
+  <<abstract>>
+  +pointValue
+  +consume(p: PacMan)
+}
+
+class Pellet
+class PowerPellet {
+  +frightenDuration
+}
+class Fruit {
+  +spawnTime
+  +despawnTime
+}
+
+Item <|-- Pellet
+Item <|-- PowerPellet
+Item <|-- Fruit
+
+Tile "0..1" o-- "0..1" Item : holds
+
+PacMan --> Item : consumes
+Pellet --> Score : adds points
+PowerPellet --> Score : adds points
+Fruit --> Score : adds points
+
+PowerPellet --> Ghost : triggers frightened
+FrightenedState --> Ghost : applied to
+
+%%========================
+%% Game state enum (optional)
+%%========================
+class GameState {
+  <<enumeration>>
+  Start
+  Playing
+  Paused
+  LevelComplete
+  GameOver
+}
+
+Game --> GameState : current
+Level --> Score : awards
+LifeManager --> PacMan : tracks
+LifeManager --> Ghost : resets
