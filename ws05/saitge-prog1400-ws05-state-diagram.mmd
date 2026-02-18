@@ -1,0 +1,21 @@
+stateDiagram-v2
+    [*] --> LEVEL_INIT : startGame()
+
+    LEVEL_INIT --> PLAYING : initComplete()
+
+    PLAYING --> PAUSED : pausePressed()
+    PAUSED --> PLAYING : pausePressed()
+
+    PLAYING --> POWER_MODE : powerPellet()
+    POWER_MODE --> PLAYING : timerExpired()
+
+    PLAYING --> LIFE_LOST : collisionNormal()
+    LIFE_LOST --> LEVEL_INIT : resetComplete()
+
+    PLAYING --> LEVEL_COMPLETE : objectivesMet()
+    LEVEL_COMPLETE --> LEVEL_INIT : nextLevel()
+
+    LEVEL_COMPLETE --> GAME_OVER : noMoreLevels()
+    LIFE_LOST --> GAME_OVER : noLivesRemaining()
+
+    GAME_OVER --> [*]
