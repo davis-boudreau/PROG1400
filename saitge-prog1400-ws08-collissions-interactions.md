@@ -13,6 +13,7 @@
 **Workshop Title:** Collision Detection & Interaction Rules
 **Workshop Type:** Guided Learning Workshop
 **Estimated Time:** 2–3 hours
+**Instructor:** Davis Boudreau (w0305171)
 
 **Prerequisites:**
 
@@ -440,3 +441,12 @@ You now understand:
 You are now building **real game interactions**, not hacks.
 
 ---
+
+## 🔮 Week 9 Preview
+
+Next week, you will implement:
+
+> **Collectibles & Scoring Systems**
+
+Your game now reacts to collisions.
+Next, it will **remember and reward**.
