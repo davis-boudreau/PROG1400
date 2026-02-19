@@ -1,8 +1,8 @@
-# 🧩 PROG1400 — Workshop 6
+# 🧩 PROG1400 — Workshop 06
 
 ## Building the World: TileMap, Grid, and Movement Rules
 
-### *Turning UML Class Diagrams into Real Python Classes*
+### *Turning UML Class Diagrams into Python (Explained Line by Line)*
 
 ---
 
@@ -13,17 +13,17 @@
 **Workshop Title:** World Grid & TileMap Implementation
 **Workshop Type:** Guided Learning Workshop
 **Estimated Time:** 2–3 hours
+
 **Prerequisites:**
 
 * Workshop 3 — UML Class Diagram (World + Entities)
 * Workshop 4 — Game Rules + UML Sequence Diagrams
-* Workshop 5 — State Machine Starter Code
+* Workshop 5 — Game State Machine
 
 **Tools Required:**
 
 * Visual Studio Code
 * Python 3
-* VS Code Extension: **Mermaid Chart** (official)
 * Existing PROG1400 repository
 
 **Primary Learning Outcome:**
@@ -33,55 +33,42 @@
 
 ## 2. Why This Workshop Matters (Read First)
 
-Up to now, you have built the **control logic** of your game:
+So far, you have controlled **when** things happen using a **state machine**.
 
-* You designed the **world structure** (UML class diagram)
-* You defined **how objects interact** (sequence diagrams)
-* You implemented **state control** (state machine)
+Now you will define **where** things are allowed to exist and move.
 
-Now it is time to build the **world itself**.
+This workshop builds the **world itself** — the part of the game that:
 
-> The world is not the player.
-> The world is not the enemy.
-> The world is the **rules and boundaries** everything else must obey.
+* stores the layout
+* defines walls and paths
+* answers movement questions
 
-In this workshop, you will implement the **TileMap / WorldGrid** that:
+> The world does **not** move.
+> The world enforces rules.
 
-* defines where movement is allowed
-* stores the layout of your game
-* acts as the *single source of truth* for collision rules
-
-This is the foundation of **every grid-based game**.
+This is a critical object-oriented idea.
 
 ---
 
-## 3. Big Idea: The World Owns the Rules
+## 3. Big Idea: World Rules Live in One Place
 
-One of the most common beginner mistakes is putting world rules in the player:
+A beginner mistake is letting the player decide what is allowed:
 
 ```python
-# ❌ BAD (what beginners do)
-if next_tile != "#":
+# ❌ BAD
+if grid[row][col] != "#":
     move_player()
 ```
 
-Instead, we do this:
+A professional design looks like this:
 
 ```python
-# ✅ GOOD (professional design)
-if tile_map.is_walkable(next_position):
+# ✅ GOOD
+if tile_map.is_walkable(position):
     move_player()
 ```
 
-Why?
-
-Because:
-
-* multiple objects need the same rules
-* rules change over time
-* logic must live in **one place**
-
-This workshop teaches you how to do that **correctly**.
+The rule belongs to the **world**, not the player.
 
 ---
 
@@ -89,69 +76,61 @@ This workshop teaches you how to do that **correctly**.
 
 By the end of this workshop, you will have:
 
-1. A **TileType enum** (what tiles exist)
-2. A **GridCoord / Position class**
-3. A **TileMap class** that:
+1. A **TileType Enum**
+2. A **Position class**
+3. A **TileMap class**
+4. Clean methods for:
 
-   * stores the grid
-   * validates positions
-   * answers movement questions
-4. A **console-based test** proving your world works
-5. Code that directly matches your **UML class diagram**
-
-No graphics yet.
-No player movement yet.
-Just **clean world logic**.
+   * bounds checking
+   * tile lookup
+   * walkability validation
+5. A console test proving the world works
 
 ---
 
-# 🧠 Part A — Review the UML (Design Anchoring)
+# 🧠 Part A — Folder Structure & Imports
 
-Before writing code, open your **UML Class Diagram** from Workshop 3.
-
-You should see concepts similar to:
-
-* `Level`
-* `TileMap` or `WorldGrid`
-* `TileType`
-* `Position` / `GridCoord`
-
-🧠 **Reminder:**
-UML is not decoration.
-Your code should *look like* your diagram.
-
----
-
-# 🧱 Part B — Create the World Module
-
-## Step B1 — Folder Structure
-
-Inside your repository:
+Before coding, create this structure:
 
 ```
 /src/world/
+    tile_type.py
+    position.py
+    tile_map.py
 ```
 
-Create the following files:
-
-```
-tile_type.py
-position.py
-tile_map.py
-```
-
-This separation keeps responsibilities clear.
+Separating files helps keep **responsibilities clear**.
 
 ---
 
-# 🧩 Part C — Tile Types (What Exists in the World)
+# 🧩 Part B — Tile Types (`tile_type.py`)
 
-## Step C1 — Create `tile_type.py`
+## Step B1 — Why an Enum?
+
+A tile can only be one of a **fixed set of values**.
+
+Using an `Enum`:
+
+* prevents invalid tiles
+* improves readability
+* matches UML `<<enumeration>>`
+
+---
+
+## Step B2 — Code with Explanation
 
 ```python
 from enum import Enum
+```
 
+### 🔍 Import explanation
 
+* `enum` is part of Python’s standard library
+* `Enum` allows us to define named constants
+
+---
+
+```python
 class TileType(Enum):
     WALL = "#"
     PATH = "."
@@ -159,58 +138,91 @@ class TileType(Enum):
     EXIT = "E"
 ```
 
-🧠 **Why an Enum?**
+### 🔍 Line-by-line meaning
 
-* prevents invalid tiles
-* improves readability
-* matches UML `<<enumeration>>`
+* `TileType` is a **new type**
+* Each entry is a possible tile
+* The symbols (`"#"`, `"."`) are how tiles might appear in a text map
 
-🧠 **Pac-Man mapping:**
-
-* `#` → wall
-* `.` → path
-* `S` → player spawn
-* `E` → exit or goal
-
-Students may customize this for their game.
+🧠 **OOP idea:** *Abstraction* — we use names instead of raw symbols.
 
 ---
 
-# 🧭 Part D — Position / Grid Coordinates
+# 🧭 Part C — Position Class (`position.py`)
 
-## Step D1 — Create `position.py`
+## Step C1 — Why a Position Class?
+
+Instead of passing `(row, col)` everywhere, we wrap them in an object.
+
+Benefits:
+
+* clearer code
+* fewer bugs
+* easier to extend later
+
+---
+
+## Step C2 — Code with Explanation
 
 ```python
 from dataclasses import dataclass
+```
 
+### 🔍 Import explanation
 
+* `dataclasses` automatically generate common methods
+* reduces boilerplate code
+
+---
+
+```python
 @dataclass(frozen=True)
 class Position:
     row: int
     col: int
 ```
 
-🧠 **Why a class for position?**
+### 🔍 What this means
 
-* avoids passing raw numbers everywhere
-* improves readability
-* easier to extend later
-* matches UML design
+* `@dataclass` creates:
 
-🧠 **Important:**
-`frozen=True` makes positions immutable — they represent **data**, not behaviour.
+  * `__init__`
+  * `__repr__`
+  * `__eq__`
+* `frozen=True` means:
+
+  * position cannot change
+  * positions represent **data**, not behaviour
+
+🧠 **OOP idea:** *Immutability* improves safety.
 
 ---
 
-# 🧱 Part E — The TileMap (The Heart of the World)
+# 🧱 Part D — TileMap Class (`tile_map.py`)
 
-## Step E1 — Create `tile_map.py`
+## Step D1 — Imports Explained
 
 ```python
 from tile_type import TileType
 from position import Position
+```
 
+### 🔍 Why these imports?
 
+* `TileMap` needs to know:
+
+  * what tile types exist
+  * how positions are represented
+
+This mirrors the UML relationship:
+
+> TileMap **uses** Position and TileType
+
+---
+
+## Step D2 — Constructor (`__init__`)
+
+```python
 class TileMap:
     def __init__(self, grid):
         self.grid = grid
@@ -218,26 +230,33 @@ class TileMap:
         self.cols = len(grid[0]) if self.rows > 0 else 0
 ```
 
-🧠 **What this does:**
+### 🔍 What happens here?
 
-* stores the world layout
-* remembers its dimensions
+* `grid` is a 2D list of `TileType`
+* `rows` and `cols` are cached for fast checks
+* this object now **owns the world data**
+
+🧠 **OOP idea:** *Encapsulation* — world data lives inside TileMap.
 
 ---
 
-## Step E2 — Bounds Checking
+## Step D3 — Bounds Checking
 
 ```python
     def in_bounds(self, pos: Position) -> bool:
         return 0 <= pos.row < self.rows and 0 <= pos.col < self.cols
 ```
 
-🧠 **Why this matters:**
-Objects should never assume the map is infinite.
+### 🔍 Why this matters
+
+* prevents index errors
+* defines the edges of the world
+
+🧠 **Rule:** Anything outside the map is invalid.
 
 ---
 
-## Step E3 — Tile Lookup
+## Step D4 — Tile Lookup
 
 ```python
     def get_tile(self, pos: Position) -> TileType:
@@ -246,12 +265,16 @@ Objects should never assume the map is infinite.
         return self.grid[pos.row][pos.col]
 ```
 
-🧠 **Design choice:**
-Out-of-bounds counts as a wall — safe default.
+### 🔍 Design decision explained
+
+* Out-of-bounds counts as a wall
+* This avoids checking bounds everywhere else
+
+🧠 **OOP idea:** *Fail-safe defaults*
 
 ---
 
-## Step E4 — Movement Rule (Key Method)
+## Step D5 — Walkability Rule
 
 ```python
     def is_walkable(self, pos: Position) -> bool:
@@ -259,19 +282,25 @@ Out-of-bounds counts as a wall — safe default.
         return tile != TileType.WALL
 ```
 
-🧠 **This method is critical.**
-Every moving object will call this later.
+### 🔍 Why this method is important
+
+* every moving object will call this
+* rules are centralized
+* future changes happen here only
+
+🧠 **This method is the “gatekeeper” of movement.**
 
 ---
 
-# 🧪 Part F — Console Test (Prove the World Works)
+# 🧪 Part E — Console Test (Proof the World Works)
 
-Add this test at the bottom of `tile_map.py`:
+Add this to the bottom of `tile_map.py`:
 
 ```python
 if __name__ == "__main__":
     grid = [
         [TileType.WALL, TileType.WALL, TileType.WALL],
+        [TileType.WALL, TileType.PATH, TileType.WALL],
         [TileType.WALL, TileType.PATH, TileType.WALL],
         [TileType.WALL, TileType.WALL, TileType.WALL],
     ]
@@ -291,66 +320,28 @@ False
 False
 ```
 
-If you see this, your world rules work.
+---
+
+# 🔁 Part F — Mapping Back to UML
+
+Your UML class diagram said:
+
+* TileMap **owns** grid
+* TileMap **uses** Position
+* TileMap **returns** TileType
+
+You have now implemented that diagram **exactly**.
 
 ---
 
-# 🔁 Part G — Connecting Back to UML & Sequence Diagrams
-
-Recall your **movement sequence diagram**:
-
-```
-Player → TileMap : isWalkable(nextPosition)
-TileMap → Player : true / false
-```
-
-You have now implemented that interaction — **exactly**.
-
-🧠 This is not accidental.
-This is **model-driven development**.
-
----
-
-# 🤖 Part H — Using Copilot Responsibly
-
-You may use Copilot to:
-
-* generate boilerplate
-* check syntax
-* speed up typing
-
-But you must:
-
-* understand every method
-* ensure code matches UML
-* rename concepts to match your game
-
-### Suggested Copilot Prompt
-
-```text
-Generate a Python TileMap class that:
-- stores a grid
-- checks bounds
-- returns tile types
-- determines walkability
-Use clean OOP design.
-```
-
----
-
-# 📦 Deliverables
+## 📦 Deliverables
 
 Submit:
 
-1. **World Code**
-
-   * `tile_type.py`
-   * `position.py`
-   * `tile_map.py`
-
-2. **Screenshot**
-
-   * Console output showing walkability tests
+1. `tile_type.py`
+2. `position.py`
+3. `tile_map.py`
+4. Console test screenshot
 
 ---
 
@@ -358,12 +349,12 @@ Submit:
 
 You now understand:
 
-* why world rules belong in one class
-* how UML class diagrams map to Python
-* how to prevent logic duplication
-* how to test systems without graphics
-* how professional games are structured
+* how enums model fixed concepts
+* why dataclasses are useful
+* how imports connect classes
+* where rules belong in OOP
+* how UML becomes Python
 
-This is **real OOP**.
+This is **foundational game architecture**.
 
 ---
