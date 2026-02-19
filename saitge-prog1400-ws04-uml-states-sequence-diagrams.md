@@ -1,4 +1,4 @@
-# 🧩 PROG1400 — Assignment 4
+# 🧩 PROG1400 — Workshop 4
 
 ## Game States & UML Sequence Diagrams
 
