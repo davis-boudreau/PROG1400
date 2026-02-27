@@ -1,0 +1,17 @@
+Week / Unit,Topics / Description,Relevant Learning Outcome(s),Assignment / Evaluation,%
+Week 1 (Jan 5–9),Introduction to OOP; Procedural vs OOP; Deconstruct Pac-Man; Select student game; Identify objects attributes behaviors (WS01),LO1,Workshop 01 – Game Concept Brief (Formative),
+Week 2 (Jan 12–16),Python classes; __init__; instance variables; methods; object instantiation; Build Player and Enemy classes (WS02),LO1 LO2,Workshop 02 – Class Prototype (Formative),
+Week 3 (Jan 19–23),Encapsulation; Responsibility-driven design; CRC modeling; Class refactoring (WS03),LO1 LO2,Workshop 03 – CRC Submission (Formative),
+Week 4 (Jan 26–30),UML Class Diagrams; Object relationships; Full game architecture modeling (WS04),LO1,UML Architecture Submission (Graded),10%
+Week 5 (Feb 2–6),Sequence diagrams; Object interaction; Mapping diagrams to Python code (WS05),LO2,Workshop 05 – Sequence + Code Mapping (Formative),
+Week 6 (Feb 9–13),Finite State Machines; Implement behavioral states in classes (WS06),LO1 LO2,Workshop 06 – State Implementation (Formative),
+Week 7 (Feb 16–20),Inheritance & Polymorphism; Base classes; Method overriding; super() (WS07),LO2,Workshop 07 – Inheritance Demo (Formative),
+Week 8 (Feb 23–27),Game loop architecture; Separation of concerns; Engine structure; Refactoring (WS08),LO2 LO3,Workshop 08 – Engine Refactor (Formative),
+Week 9 (Mar 2–6),Managing collections of objects; Lifecycle control; Safe iteration patterns (WS09),LO3,Workshop 09 – Dynamic Object Lists (Formative),
+Week 10 (Mar 9–13),Midterm Practical Evaluation; Code comprehension; Debugging; UML interpretation; Design explanation,LO1 LO2 LO3,Midterm Practical Evaluation (Graded),25%
+Week 11 (Mar 16–20),Break Week – No Classes,,,
+Week 12 (Mar 23–27),Introduction to Pygame; Window creation; Event loop; Rendering; Transition from console to graphical environment (WS10),LO2,Workshop 10 – Playable Window (Formative),
+Week 13 (Mar 30–Apr 3),Real-time movement; Collision detection; Score integration in Pygame (WS11),LO2 LO3,Workshop 11 – Playable Prototype (Formative),
+Week 14 (Apr 6–10),Game states; Start Pause Game Over; UX polish; Stability improvements (WS12),LO2 LO4,Workshop 12 – Multi-State Implementation (Formative),
+Week 15 (Apr 13–15),Refactoring; Debugging; Enhancements; Portfolio preparation (WS13),LO3 LO4,Final Game Project + Demo + Reflection (Graded),35%
+Workshops & Engagement (WS01–WS13),Ongoing formative workshop evaluation across semester,LO1 LO2 LO3 LO4,Ongoing Workshop Rubric,30%

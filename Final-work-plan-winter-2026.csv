@@ -1,0 +1,16 @@
+Week / Unit,Topics / Description,Relevant Learning Outcome(s),Assignment / Evaluation,%
+Week 1 (Jan 5–9),Course launch; OOP paradigm; Pac-Man decomposition; students select game; create Project Brief (UML v0),LO1,Assignment - Game Concept Brief,5%
+Week 2 (Jan 12–16),Encapsulation & Abstraction; identifying objects & responsibilities,"LO1, LO2",Assignment – Responsibilities worksheet,5%
+Week 3 (Jan 19–23),UML Basics; Mermaid setup; build game Class Diagram live; students create UML Diagrams,"LO1, LO2",Assignment – UML Class Diagrams,5%
+Week 4 (Jan 26–30),UML Basics; Mermaid setup; build Pac-Man Sequence Diagrams,LO1,Assignment – UML Sequence Diagrams,5%
+Week 5 (Feb 2–6),Sequence Diagrams ? Code Mapping. Message passing. Interaction modeling. (WS05),LO2,Workshop 05 - From State Diagrams to Python Code,2.5%
+Week 6 (Feb 9–13),State Machines & Behavior Modeling. Implementing FSM logic in classes. (WS06),"LO1, LO2",Workshop 06 – State Implementation (Formative),2.5%
+Week 7 (Feb 16–20),"Inheritance & Polymorphism. Base classes, super(), overriding methods. (WS07)",LO2,Workshop 07 – Inheritance Implementation (Formative),2.5%
+Week 8 (Feb 23–27),Engine Architecture & Separation of Concerns. Game loop structure. Modular design. (WS08),"LO2, LO3",Workshop 08 – Engine Refactor (Formative),2.5%
+Week 9 (Mar 2–6),Managing Collections & Object Lifecycle. Lists of entities. Safe iteration patterns. (WS09),LO3,Workshop 09 – Dynamic Object Management (Formative),2.5%
+Week 10 (Mar 9–13),Debugging & Refactoring Fundamentals. Code smells. Trace tables. Step debugging. Clean code improvements. (WS10),"LO3, LO4",Workshop 10 – Debug & Refactor Lab (Formative),2.5%
+Week 11 (Mar 16–20),Midterm Practical Evaluation. Code comprehension. UML interpretation. Debug exercise. Design explanation.,"LO1, LO2, LO3",Midterm Practical Evaluation (Graded),25%
+Week 12 (Mar 23–27),Break Week – No Classes,—,—,—
+Week 13 (Mar 30–Apr 3),Introduction to Pygame. Window creation. Event loop. Rendering OOP objects visually. (WS11),LO2,Workshop 11 – Playable Window (Formative),2.5%
+Week 14 (Apr 6–10),Real-time movement. Collision detection. Score integration. Game state management in Pygame. (WS12),"LO2, LO3",Workshop 12 – Playable Prototype (Formative),2.5%
+Week 15 (Apr 13–15),"Refactoring, Optimization & Enhancements. AI tuning. Feature expansion. Portfolio polish. (WS13)","LO3, LO4",Final Game Project + Demo + Reflection (Graded),35%
