@@ -4,6 +4,18 @@
 
 # **PROG1400 – Introduction to Object-Oriented Programming**
 
+**Course Title:** Introduction to Object Oriented Programming
+
+**Course Code:*** PROG 1400
+
+**Hours:** 60
+
+**Credits:** 4
+
+**Prerequisites:** PROG 1101 or PROG 1700 or PROG 1102
+
+**Instructor:** Davis Boudreau
+
 ### Course Summary
 
 PROG1400 introduces students to object-oriented programming (OOP) using a structured **project-based learning (PBL)** model. Throughout the semester, students develop a Pac-Man–style game application while the instructor models concepts using the classic Pac-Man case study. Students apply each newly introduced concept—such as encapsulation, abstraction, inheritance, and polymorphism—directly to their own evolving project.
