@@ -4,11 +4,15 @@
 
 # **PROG1400 – Study Guide**
 
-## **LO1: Describe Applications Using Core Object-Oriented Programming Principles**
+**Course:** PROG1400 – Introduction to Object-Oriented Programming
 
 **Instructor:** Davis Boudreau
 
-**Exam Type:** Closed Book, No Computer
+**Midterm Type:** Theory
+
+**Exam Type:** Closed Book
+
+* LO1: Describe Applications Using Core Object-Oriented Programming Principles**
 
 **What This Exam Tests:**
 Your ability to **explain and describe** object-oriented design using:
@@ -241,4 +245,18 @@ Write clearly.
 * Please do not hesitate to **reach out to your instructor before the exam if you have any concerns.**
 
 ---
+
+# **Rubric – LO1 Exam**
+
+**Total: 50 points**
+
+| **Criteria**                            | **Exceeds Expectations**                                                                                                                              | **Meets Expectations**                                        | **Approaching Expectations**                                | **Below Expectations**                             | **Points** |
+| --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- | ----------------------------------------------------------- | -------------------------------------------------- | ---------- |
+| **Understanding of OOP Principles**     | Provides clear, accurate explanations of encapsulation, abstraction, inheritance, polymorphism, aggregation, and interfaces using correct terminology | Mostly accurate explanations with only minor gaps             | Partial understanding; explanations are vague or incomplete | Major misunderstandings or incorrect terminology   | **/20**    |
+| **Application to Pac-Man Case Study**   | Uses Pac-Man accurately and effectively to explain object responsibilities and OOP concepts                                                           | Uses Pac-Man with mostly correct examples; minor inaccuracies | References Pac‑Man but explanations lack clarity            | Little or incorrect reference to Pac‑Man           | **/15**    |
+| **Application to Student Game Project** | Clearly applies OOP concepts to the student’s own game with well‑defined objects and responsibilities                                                 | Applies OOP concepts with minor issues                        | Superficial or unclear application to student’s game        | Minimal or incorrect application to student’s game | **/15**    |
+
+***
+
+# **Total Score:** **/50**
 
