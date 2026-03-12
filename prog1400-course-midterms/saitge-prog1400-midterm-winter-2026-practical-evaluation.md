@@ -2,240 +2,480 @@
 
 ---
 
-# **PROG1400 – Midterm Practical Instructions**
+# PROG1400 – Midterm Practical Instructions
 
 **Course:** PROG1400 – Introduction to Object-Oriented Programming
 
 **Instructor:** Davis Boudreau
 
 **Evaluation Type:** Midterm Practical (Hands-On)
-
-**Duration:** 2 hours (in-class lab)
+**Duration:** 2 Hours (In-Class Lab)
 
 ---
 
-## **Purpose of This Midterm**
+# Purpose of This Midterm
 
 This midterm evaluates your ability to **apply object-oriented programming concepts in practice**, not just describe them.
 
 You will demonstrate that you can:
 
-* Model a game using **UML class and sequence diagrams**
+* Model a system using **UML class and sequence diagrams**
 * Use **Mermaid diagrams inside VS Code**
-* Use **Copilot responsibly** with proper prompt engineering
-* Write **basic object-oriented Python code**
+* Use **Copilot responsibly**
+* Apply **object-oriented design principles to your game**
 * Manage your work using **GitHub version control**
-* Troubleshoot issues and explain your decisions
+* Test your design by **instantiating objects**
+* Explain your design decisions
 
-This midterm is based on **your Pac-Man-like game project** that you selected earlier in the course.
+This midterm is based on **your Pac-Man-like game project** selected earlier in the course.
 
 ---
 
-## **Learning Outcomes Being Assessed**
+# Learning Outcomes Being Assessed
 
 This midterm assesses the following learning outcomes:
 
-* **LO2:** Implement object-oriented design principles in applications
-* **LO3:** Manage and distribute code through code reuse and versioning
-* **LO4:** Develop an object-oriented solution using software modelling documentation
+### LO2 – Implement object-oriented design principles in applications
+
+### LO3 – Manage and distribute code through code reuse and versioning
+
+### LO4 – Develop an object-oriented solution using software modelling documentation
 
 ---
 
-## **Allowed Tools**
+# Allowed Tools
 
-You **will use**:
+You **may use**:
 
 * VS Code
-* GitHub (your repository)
+* GitHub repository
 * Mermaid diagrams
 * GitHub Copilot
-* Course notes and documentation
+* Course notes
 
 You **may NOT**:
 
-* Copy code or diagrams from another student
-* Blindly accept Copilot output without understanding it
+* Copy work from another student
+* Accept Copilot output without understanding it
 
-> You must be able to **explain everything you submit**.
-
----
-
-## **What You Must Complete**
-
-You are required to complete **all three tasks** below.  The rubric will be applied to each task.
+> You must be able to **explain everything you submit.**
 
 ---
 
-## **Task 1 – UML Modelling with Mermaid (LO4)**
+# Midterm Development Workflow
 
-### What You Must Do
+During the exam you should follow the **professional development pipeline** handed out by your instructor.
 
-1. Open your game project in **VS Code**
-2. Ensure a **Mermaid preview extension** is installed and working
-3. In your repository, create the folder:
 
-   ```
-   docs/uml/
-   ```
-4. Create **two Mermaid diagrams**:
+# Task 1 – Repository Setup & Version Control
 
-   * **One UML Class Diagram**
-   * **One UML Sequence Diagram**
+### Learning Outcome: **LO3**
 
-### Diagram Requirements
-
-**Class Diagram**
-
-* Represents your game
-* Includes **3–5 classes**
-* Shows attributes and methods
-* Shows relationships between classes
-
-**Sequence Diagram**
-
-* Shows a real interaction from your game
-  (e.g., movement, collision, scoring, enemy interaction)
-
-### Copilot Requirement
-
-* You may use Copilot to help generate Mermaid syntax
-* You must **edit, improve, and correct** the output
-* Be prepared to explain:
-
-  * What the diagram shows
-  * What changes you made
-  * Why the diagram represents your game correctly
+You will begin by setting up a **GitHub repository** that will contain your midterm work.
 
 ---
 
-## **Task 2 – Version Control & GitHub (LO3)**
+## Step 1 – Create GitHub Repository
 
-### What You Must Do
+Create a **public repository** named:
 
-1. Work entirely inside a **GitHub repository**
-2. Make **multiple commits** as you work
-3. Use **clear commit messages** that describe what you did
+```
+wXXXXXXX-midterm
+```
 
-### You Should Demonstrate
+Where:
 
-* Understanding of:
+```
+XXXXXXX = your NSCC student number
+```
 
-  * Local vs remote repositories
-  * Why commits are made incrementally
-* Ability to explain:
+Example:
 
-  * What each commit represents
-  * Why version control is important
-
-> A single large commit at the end will negatively affect your evaluation.
-
----
-
-## **Task 3 – OOP Implementation from UML (LO2)**
-
-### What You Must Do
-
-1. Using the instructor provided UML Class Diagram, Write **simple Python OOP code** that demonstrates:
-
-   * Classes
-   * Encapsulation
-   * Inheritance
-   * Polymorphism
-
-### Important Notes
-
-* Your code does **not** need to be a fully working program.
-* Focus on:
-
-  * Clear class structure
-  * Correct responsibilities
-  * Be prepared to explain:
-  * How your code matches the UML
-  * Which OOP principles are being used
+```
+w1234567-midterm
+```
 
 ---
 
-## **What Will Be Evaluated**
+## Step 2 – Clone the Repository
+
+Clone the repository to your computer.
+
+Example:
+
+```
+git clone <repository-url>
+```
+
+Open the repository in **VS Code**.
+
+---
+
+## Step 3 – Create Project Structure
+
+Inside the repository create:
+
+```
+docs/
+    uml/
+src/
+```
+
+Your project should resemble:
+
+```
+wXXXXXXX-midterm
+│
+├─ docs
+│   └─ uml
+│       ├─ initialization_state_class_diagram.mmd
+│       └─ initialization_state_sequence_diagram.mmd
+│
+├─ src
+│   └─ game_objects.py
+│
+└─ README.md
+```
+
+---
+
+## Step 4 – Commit Incrementally
+
+Make **small commits throughout the midterm**.
+
+Example commit messages:
+
+```
+Initial repository setup
+Added UML class diagram
+Added UML sequence diagram
+Implemented game object classes
+Added instantiation testing
+```
+
+> A single commit at the end does not demonstrate proper version control.
+
+---
+
+# Task 2 – UML Modelling with Mermaid
+
+### Learning Outcome: **LO4**
+
+You will model the **Initialization State of your game**.
+
+---
+
+## Step 1 – Identify Game Objects
+
+Identify **3–5 key objects** that exist when your game **initializes**.
+
+Examples may include:
+
+```
+GameController
+Player
+Enemy
+Maze
+Pellet
+ScoreManager
+```
+
+---
+
+## Step 2 – Create UML Class Diagram
+
+Create the file:
+
+```
+docs/uml/initialization_state_class_diagram.mmd
+```
+
+Your diagram must include:
+
+* 3–5 classes
+* attributes
+* methods
+* relationships between classes
+
+Example structure:
+
+```
+GameController --> Player
+GameController --> Enemy
+Player --> ScoreManager
+```
+
+---
+
+## Step 3 – Create UML Sequence Diagram
+
+Create:
+
+```
+docs/uml/initialization_state_sequence_diagram.mmd
+```
+
+This diagram should show **how objects interact during game startup**, for example:
+
+* Game starts
+* Player object created
+* Maze loaded
+* Enemies spawned
+* Score system initialized
+
+Example Mermaid sequence structure:
+
+```
+sequenceDiagram
+GameController->>Player: create()
+GameController->>Maze: load()
+GameController->>Enemy: spawn()
+GameController->>ScoreManager: initialize()
+```
+
+---
+
+## Copilot Use
+
+You may use **GitHub Copilot** to assist with Mermaid syntax.
+
+However, you must be able to explain:
+
+* What each class represents
+* Why relationships exist
+* What the sequence diagram shows
+
+---
+
+# Task 3 – Apply OOP Principles to Your Game
+
+### Learning Outcome: **LO2**
+
+Using your UML diagram as a guide, you will implement **Python classes that represent the objects in your game**.
+
+Your code should demonstrate the following principles applied to **your game objects**:
+
+* Encapsulation
+* Inheritance
+* Polymorphism
+
+---
+
+## Step 1 – Create Python Source File
+
+Create the file:
+
+```
+src/game_objects.py
+```
+
+---
+
+## Step 2 – Implement Classes from Your Game Design
+
+Your classes should reflect the objects identified in your UML diagram.
+
+For example:
+
+```
+Player
+Enemy
+GameController
+Maze
+ScoreManager
+```
+
+Your code should demonstrate **clear object responsibilities**.
+
+---
+
+## Step 3 – Test by Instantiating Objects
+
+Your program must demonstrate that objects can be created and interact.
+
+Example structure:
+
+```python
+game = GameController()
+
+player = Player()
+enemy = Enemy()
+
+player.update()
+enemy.update()
+```
+
+This confirms that:
+
+* Classes exist
+* Objects can be instantiated
+* Methods execute
+
+---
+
+# OOP Memory Jogger (Non-Game Examples)
+
+The following examples illustrate **core OOP principles using non-game contexts**.
+
+These are **reference examples only**.
+
+---
+
+## Encapsulation Example (Bank Account)
+
+```python
+class BankAccount:
+
+    def __init__(self):
+        self._balance = 1000
+
+    def deposit(self, amount):
+        self._balance += amount
+
+    def get_balance(self):
+        return self._balance
+```
+
+The account object manages its own financial data.
+
+---
+
+## Inheritance Example (Vehicle System)
+
+```python
+class Vehicle:
+
+    def start(self):
+        print("Vehicle starting")
+
+class Car(Vehicle):
+    pass
+```
+
+The Car class inherits behavior from Vehicle.
+
+---
+
+## Polymorphism Example (Library System)
+
+```python
+class LibraryItem:
+
+    def get_description(self):
+        pass
+
+class Book(LibraryItem):
+
+    def get_description(self):
+        print("This is a book")
+
+class DVD(LibraryItem):
+
+    def get_description(self):
+        print("This is a DVD")
+```
+
+Different objects respond differently to the same method.
+
+---
+
+# Expected Final Repository
+
+Your repository should contain:
+
+```
+wXXXXXXX-midterm
+│
+├─ docs
+│   └─ uml
+│       ├─ initialization_state_class_diagram.mmd
+│       └─ initialization_state_sequence_diagram.mmd
+│
+├─ src
+│   └─ game_objects.py
+│
+└─ README.md
+```
+
+---
+
+# How Tasks Align With Learning Outcomes
+
+| Task                          | Learning Outcome                           |
+| ----------------------------- | ------------------------------------------ |
+| Repository creation & commits | **LO3 – Version control**                  |
+| UML modelling                 | **LO4 – Software modelling documentation** |
+| Python implementation         | **LO2 – OOP design principles**            |
+
+---
+
+# What Will Be Evaluated
 
 You will be evaluated on:
 
-* How well you **manage your time**
-* How you **solve problems and troubleshoot**
-* How you **use resources**, including Copilot, Personal Notes, Course Handouts
-* Your **understanding of OOP and UML concepts**
-* Your **hands-on skills** with:
+* Time management
+* Problem solving
+* Use of information resources
+* Understanding of UML and OOP
+* Hands-on technical skills
 
-  * VS Code
-  * GitHub
-  * Mermaid
-  * Python
+Tools evaluated include:
 
-> This midterm evaluates **process and understanding**, not perfection.
+* VS Code
+* GitHub
+* Mermaid
+* Python
 
 ---
 
-## **Tips for Success**
+# Tips for Success
 
-✔ Think before you code
-✔ Make small, meaningful commits
-✔ Use Copilot as a helper, not a replacement
+✔ Think before coding
+✔ Commit frequently
 ✔ Keep UML diagrams simple and accurate
-✔ Be ready to explain your decisions
+✔ Ensure your code reflects your UML design
+✔ Be ready to explain your work
 
 ---
 
-## **Common Mistakes to Avoid**
+# Common Mistakes to Avoid
 
-❌ Waiting too long to commit
-❌ Accepting Copilot output without understanding it
-❌ UML diagrams that don’t match your game
+❌ Waiting until the end to commit
+❌ UML diagrams that do not match your code
 ❌ One class doing everything
-❌ Not being able to explain your own work
-
-## **What to Submit**
-
-By the end of the midterm, your repository should include:
-
-* `docs/uml/` folder with Mermaid diagrams
-* Python source files demonstrating OOP
-* A clear commit history showing your work
-
-No separate upload is required unless instructed — your **GitHub repository is your submission**.
+❌ Accepting Copilot output without understanding it
+❌ Not testing your objects
 
 ---
 
-## **Evidence Collected**
+# Submission
 
-* Mermaid UML diagrams (`.md`)
-* GitHub commit history
+Your **GitHub repository is your submission**.
+
+Ensure it contains:
+
+* UML diagrams
 * Python source files
-* Verbal explanations during the practical
-* Instructor observation of workflow
+* Commit history showing your workflow
 
 ---
 
-# **Midterm Practical Rubric (Analytic – Brightspace Format)**
+# Midterm Practical Rubric
 
-**Scoring Scale:**
-5 = Exceeded Expectations
-4 = Meets Expectations
-3 = Approaching Expectations
-1 = Does Not Meet Expectations
-0 = Not Attempted
+**Total Score: 25**
 
----
-
-### **Midterm Practical Evaluation Rubric**
-
-| **Criteria**                                                                 | **Exceeded Expectations (5)**                                       | **Meets Expectations (4)**                 | **Approaching Expectations (3)**            | **Does Not Meet Expectations (1)**       | **Not Attempted (0)** | **Score** |
-| ---------------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------ | ------------------------------------------- | ---------------------------------------- | --------------------- | --------- |
-| **Time Management**<br>*(Preparation, organization, task completion)*        | Excellent preparedness; tasks completed early and efficiently       | Well prepared; tasks completed on time     | Some preparation; tasks completed late      | Poor preparation; tasks incomplete       | Task not attempted    | /5        |
-| **Problem Solving Skills**<br>*(Troubleshooting & application of knowledge)* | Independently troubleshoots and applies solutions effectively       | Solves most issues with minimal assistance | Requires guidance to resolve issues         | Struggles to resolve problems            | Task not attempted    | /5        |
-| **Accessing Information Resources**<br>*(Docs, Copilot, references)*         | Uses own resources efficiently; finds information very quickly      | Uses a mix of resources effectively        | Relies on searches but locates information  | Struggles to locate or apply information | Task not attempted    | /5        |
-| **Knowledge (Theory Behind the Practical)**<br>*(UML, OOP principles)*       | Excellent understanding of UML and OOP concepts; clear explanations | Good understanding with minor gaps         | Some understanding; explanations lack depth | Limited understanding                    | Task not attempted    | /5        |
-| **Hands-On Skills**<br>*(VS Code, GitHub, Mermaid, Python)*                  | Excellent hands-on skills across all tools                          | Good hands-on skills                       | Some hands-on ability                       | Limited hands-on skills                  | Task not attempted    | /5        |
+| Criteria                  | Points |
+| ------------------------- | ------ |
+| Time Management           | /5     |
+| Problem Solving Skills    | /5     |
+| Information Resource Use  | /5     |
+| Knowledge of UML & OOP    | /5     |
+| Hands-on Technical Skills | /5     |
 
 ---
 
-### **Total Midterm Score:** **/25**
+# Total Midterm Score
 
+**/25**
+
+---
