@@ -1,0 +1,154 @@
+# Simple Pong in Python 3 for Beginners
+# By @TokyoEdTech
+
+import turtle
+# Support for sound MAC / Linux
+#import os
+import winsound
+
+wn = turtle.Screen()
+wn.title("Pong")
+wn.bgcolor("black")
+wn.setup(width=800, height=600)
+wn.tracer(0)
+
+# Score
+score_a = 0
+score_b = 0
+
+# Paddle A
+paddle_a = turtle.Turtle()
+paddle_a.speed(0)
+paddle_a.shape("square")
+paddle_a.color("white")
+paddle_a.shapesize(stretch_wid=2.5,stretch_len=0.5)
+paddle_a.penup()
+paddle_a.goto(-350, 0)
+
+# Paddle B
+paddle_b = turtle.Turtle()
+paddle_b.speed(0)
+paddle_b.shape("square")
+paddle_b.color("white")
+paddle_b.shapesize(stretch_wid=2.5,stretch_len=0.5)
+paddle_b.penup()
+paddle_b.goto(350, 0)
+
+# Ball
+ball = turtle.Turtle()
+ball.speed(0)
+ball.shape("circle")
+ball.color("white")
+# Set the resize mode to user before manual shapesize
+ball.resizemode("user")
+ball.shapesize(.25,.25,.25)
+ball.penup()
+ball.goto(0, 0)
+ball.dx = 0.25
+ball.dy = 0.25
+
+# Pen
+pen = turtle.Turtle()
+pen.speed(0)
+pen.shape("square")
+pen.color("white")
+pen.penup()
+pen.hideturtle()
+pen.goto(0, 260)
+pen.write("Player A: 0  Player B: 0", align="center", font=("Courier", 24, "normal"))
+
+# Functions
+def paddle_a_up():
+    y = paddle_a.ycor()
+    y += 20
+    paddle_a.sety(y)
+
+def paddle_a_down():
+    y = paddle_a.ycor()
+    y -= 20
+    paddle_a.sety(y)
+
+def paddle_b_up():
+    y = paddle_b.ycor()
+    y += 20
+    paddle_b.sety(y)
+
+def paddle_b_down():
+    y = paddle_b.ycor()
+    y -= 20
+    paddle_b.sety(y)
+
+# Keyboard bindings
+wn.listen()
+wn.onkeypress(paddle_a_up, "w")
+wn.onkeypress(paddle_a_down, "s")
+wn.onkeypress(paddle_b_up, "Up")
+wn.onkeypress(paddle_b_down, "Down")
+
+# Main game loop
+while True:
+       
+    # Move the ball
+    ball.setx(ball.xcor() + ball.dx)
+    ball.sety(ball.ycor() + ball.dy)
+
+    # Border checking
+
+    # Top and bottom
+    if ball.ycor() > 290:
+        ball.sety(290)
+        ball.dy *= -1
+        #MAC or Linux
+        #os.system("afplay pong_wall.wav&")
+        winsound.PlaySound('pong_wall.wav',winsound.SND_ASYNC)
+      
+    
+    elif ball.ycor() < -290:
+        ball.sety(-290)
+        ball.dy *= -1
+        #MAC or Linux
+        #os.system("afplay pong_wall.wav&")
+        winsound.PlaySound('pong_wall.wav',winsound.SND_ASYNC)
+      
+        
+    # Left and right
+    if ball.xcor() > 400:
+        score_a += 1
+        pen.clear()
+        pen.write("Player A: {}  Player B: {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
+        ball.goto(0, 0)
+        ball.dx *= -1
+        #Mac or Linux
+        #os.system("afplay pong_out.wav&")
+        # Windows
+        winsound.PlaySound('pong_out.wav', winsound.SND_ASYNC & winsound.SND_NOWAIT)
+          
+    elif ball.xcor() < -400:
+        score_b += 1
+        pen.clear()
+        pen.write("Player A: {}  Player B: {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
+        ball.goto(0, 0)
+        ball.dx *= -1
+        #Mac or Linux
+        #os.system("afplay pong_out.wav&")
+        # Windows
+        winsound.PlaySound('pong_out.wav', winsound.SND_ASYNC & winsound.SND_NOWAIT)
+      
+
+    # Paddle and ball collisions
+    if ball.xcor() < -340 and ball.ycor() < paddle_a.ycor() + 50 and ball.ycor() > paddle_a.ycor() - 50:
+        ball.dx *= -1 
+        #Mac or Linux
+        #os.system("afplay pong_paddle.wav&")
+        # Windows
+        winsound.PlaySound('pong_paddle.wav', winsound.SND_ASYNC)
+      
+    
+    elif ball.xcor() > 340 and ball.ycor() < paddle_b.ycor() + 50 and ball.ycor() > paddle_b.ycor() - 50:
+        ball.dx *= -1
+        #Mac or Linux
+        #os.system("afplay pong_paddle.wav&")
+        # Windows
+        winsound.PlaySound('pong_paddle.wav', winsound.SND_ASYNC)
+    wn.update()
+    
