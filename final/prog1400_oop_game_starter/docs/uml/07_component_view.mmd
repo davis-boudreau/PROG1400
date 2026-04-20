@@ -1,0 +1,9 @@
+flowchart LR
+    A[main.py] --> B[game.py]
+    B --> C[models.py]
+    B --> D[scoreboard.py]
+    B --> E[loader.py]
+    C --> F[util.py]
+    B --> G[config.py]
+    E --> H[levels/*.txt]
+    D --> I[scoreboard.json]

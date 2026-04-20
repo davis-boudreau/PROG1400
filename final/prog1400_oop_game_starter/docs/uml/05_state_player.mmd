@@ -1,0 +1,13 @@
+stateDiagram-v2
+    [*] --> Idle
+    Idle --> Moving : arrow key pressed
+    Moving --> Collecting : lands on item tile
+    Collecting --> Powered : power item collected
+    Collecting --> Idle : regular item collected
+    Powered --> Moving : continue movement
+    Moving --> HitByEnemy : enemy collision without power
+    Powered --> DefeatEnemy : enemy collision while powered
+    DefeatEnemy --> Moving
+    HitByEnemy --> Respawn : lose life and reset position
+    Respawn --> Idle
+    Powered --> Idle : power timer ends

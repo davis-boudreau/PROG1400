@@ -1,0 +1,23 @@
+sequenceDiagram
+    autonumber
+    participant Game
+    participant Level
+    participant Enemy
+    participant Player
+
+    Game->>Level: move_enemies()
+    loop each enemy
+        Level->>Enemy: choose_next_position(level, player.position)
+        Enemy->>Level: request walkable neighbors
+        Level-->>Enemy: valid positions
+        Enemy-->>Level: best next step toward player
+    end
+    Level->>Level: handle_collisions()
+    alt player is powered up
+        Level->>Enemy: reset()
+        Level-->>Game: award defeat points
+    else enemy catches player
+        Level->>Player: lose life
+        Level->>Player: reset()
+        Level->>Enemy: reset()
+    end

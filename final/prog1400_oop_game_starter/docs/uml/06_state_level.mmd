@@ -1,0 +1,10 @@
+stateDiagram-v2
+    [*] --> Loaded
+    Loaded --> Active : game starts
+    Active --> ItemProgress : player collects item
+    ItemProgress --> Active
+    Active --> LevelCleared : remaining items = 0
+    LevelCleared --> NextLevel : more levels exist
+    LevelCleared --> GameWon : no more levels
+    Active --> PlayerDefeated : player lives = 0
+    PlayerDefeated --> GameOver

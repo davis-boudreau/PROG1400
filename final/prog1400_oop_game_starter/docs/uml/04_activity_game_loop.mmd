@@ -1,0 +1,26 @@
+flowchart TD
+    A[Start Game] --> B[Load Level]
+    B --> C[Create Player and Enemies]
+    C --> D[Render Board and HUD]
+    D --> E{Player Input?}
+    E -->|Yes| F[Try Player Move]
+    E -->|No| G[Tick Update]
+    F --> H{Valid Move?}
+    H -->|No| D
+    H -->|Yes| I[Update Player Position]
+    I --> J{Collect Item?}
+    J -->|Yes| K[Increase Score and Remove Item]
+    J -->|No| L[Continue]
+    K --> L
+    L --> M{All Items Collected?}
+    M -->|Yes| N[Load Next Level or End Game]
+    M -->|No| G
+    G --> O[Move Enemies]
+    O --> P{Collision?}
+    P -->|Player Powered| Q[Reset Enemy and Award Points]
+    P -->|Player Hit| R[Lose Life and Reset Positions]
+    P -->|No| D
+    Q --> D
+    R --> S{Lives Remaining?}
+    S -->|Yes| D
+    S -->|No| T[Game Over]

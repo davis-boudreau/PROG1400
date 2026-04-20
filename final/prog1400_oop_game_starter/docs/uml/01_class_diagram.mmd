@@ -1,0 +1,76 @@
+classDiagram
+    class Game {
+        -Tk root
+        -Level level
+        -ScoreBoard scoreboard
+        -int level_index
+        -str status_message
+        +handle_player_move(direction)
+        +advance_level()
+        +tick()
+        +draw()
+        +run()
+    }
+
+    class Level {
+        -list tiles
+        -int width
+        -int height
+        -Player player
+        -list~Enemy~ enemies
+        -int remaining_items
+        +is_walkable(pos) bool
+        +walkable_neighbors(pos)
+        +try_move_player(dr, dc) LevelResult
+        +move_enemies()
+        +handle_collisions() LevelResult
+    }
+
+    class Entity {
+        -Position start
+        -Position position
+        +reset()
+    }
+
+    class Player {
+        -int score
+        -int lives
+        -int power_mode_turns
+        +is_powered bool
+        +tick()
+    }
+
+    class Enemy {
+        +choose_next_position(level, target) Position
+    }
+
+    class ScoreBoard {
+        -Path file_path
+        -int best_score
+        -int games_played
+        +load()
+        +save()
+        +finish_game(score)
+    }
+
+    class Position {
+        +int row
+        +int col
+        +moved(dr, dc) Position
+    }
+
+    class LevelResult {
+        +int points_gained
+        +bool enemy_defeated
+        +bool item_collected
+        +bool level_completed
+    }
+
+    Entity <|-- Player
+    Entity <|-- Enemy
+    Game *-- Level
+    Game *-- ScoreBoard
+    Level *-- Player
+    Level *-- Enemy
+    Entity *-- Position
+    Level ..> LevelResult

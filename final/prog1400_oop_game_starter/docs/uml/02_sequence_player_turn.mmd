@@ -1,0 +1,22 @@
+sequenceDiagram
+    autonumber
+    participant User
+    participant Game
+    participant Level
+    participant Player
+    participant Enemy
+    participant HUD as ScoreBoard/HUD
+
+    User->>Game: Press arrow key
+    Game->>Level: try_move_player(dr, dc)
+    Level->>Player: update position if tile is walkable
+    Level-->>Game: LevelResult(points, item status, level status)
+    Game->>Player: add points
+    Game->>Level: handle_collisions()
+    Level-->>Game: collision result
+    alt player collects final item
+        Game->>Game: advance_level()
+    else level continues
+        Game->>HUD: redraw score, lives, items left
+    end
+    Game->>Enemy: move on next tick
